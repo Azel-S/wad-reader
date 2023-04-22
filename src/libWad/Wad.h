@@ -29,7 +29,7 @@ private:
     int descOffset = 0;
 
     // Helper Functions
-    void addNode(string name, int length, int offset, bool isDirectory);
+    void addNode(string path, int length, int offset, bool isDirectory);
     vector<string> getPath(string path);
     Node *getNode(string path);
 

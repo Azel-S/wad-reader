@@ -1,26 +1,51 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 using namespace std;
 
-struct Descriptor
+struct Node
 {
 public:
-    uint32_t eOffset;
-    uint32_t length;
-    string name;
-    string filePath;
+    unordered_map<string, Node *> children;
+
+    int length;
+    int offset;
+    int order;
+    bool isDirectory;
+
+    // Constructor
+    Node(int length = 0, int offset = 0, int order = 0, bool isDirectory = true);
 };
 
 class Wad
 {
 private:
+    Node *root = new Node(0, 0, 0, true);
+    uint8_t *data = nullptr;
+
+    string magic = "";
+    int numDesc = 0;
+    int descOffset = 0;
+
+    // Helper Functions
+    void addNode(string name, int length, int offset, bool isDirectory);
+    vector<string> getPath(string path);
+    Node *getNode(string path);
+
 public:
     static Wad *loadWad(const string &path);
+
+    // Getters
     string getMagic();
-    bool isContent(const string &path);
-    bool isDirectory(const string &path);
     int getSize(const string &path);
     int getContents(const string &path, char *buffer, int length, int offset = 0);
     int getDirectory(const string &path, vector<string> *directory);
+
+    // Verifiers
+    bool isContent(const string &path);
+    bool isDirectory(const string &path);
+
+    // Destructor
+    ~Wad();
 };

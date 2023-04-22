@@ -7,11 +7,11 @@ using namespace std;
 struct Node
 {
 public:
-    unordered_map<string, Node *> children;
+    unordered_map<string, Node *> elements;
 
-    int length;
-    int offset;
-    int order; // Keeps track of original order.
+    int length; // Length (in bytes)
+    int offset; // Offset in data[]
+    int order;  // Original WAD order
     bool isDirectory;
 
     // Constructor

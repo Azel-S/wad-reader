@@ -11,7 +11,7 @@ public:
 
     int length;
     int offset;
-    int order;
+    int order; // Keeps track of original order.
     bool isDirectory;
 
     // Constructor

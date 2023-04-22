@@ -208,12 +208,12 @@ Wad *Wad::loadWad(const string &path)
             }
             else
             {
-                cout << "Invalid directory descriptor" << endl;
+                cout << "WARNING: Invalid directory descriptor, ignoring..." << endl;
             }
         }
         else
         {
-            cout << "Invalid size descriptor, negative value" << endl;
+            cout << "WARNING: Invalid size descriptor, negative value, ignoring..." << endl;
         }
     }
 
@@ -247,7 +247,7 @@ int Wad::getContents(const string &path, char *buffer, int length, int offset)
     {
         if (length > node->length || offset + length > node->length)
         {
-            cout << "Given length was too big, incorrect node?" << endl;
+            cout << "WARNING: Given length was too big, ignoring..." << endl;
             length = node->length;
         }
 

@@ -218,8 +218,6 @@ Wad *Wad::loadWad(const string &path)
     }
 
     return wad;
-
-    return nullptr;
 }
 
 string Wad::getMagic()

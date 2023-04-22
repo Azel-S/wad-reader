@@ -52,14 +52,6 @@ static int readdir_callback(const char *path, void *buf, fuse_fill_dir_t filler,
 {
     if (wad->isDirectory(path))
     {
-        // (void)offset;
-        // (void)fi;
-
-        // filler(buf, ".", NULL, 0);
-        // filler(buf, "..", NULL, 0);
-
-        // filler(buf, filename, NULL, 0);
-
         vector<string> elements;
         wad->getDirectory(path, &elements);
 
@@ -88,6 +80,5 @@ int main(int argc, char *argv[])
 {
     wad = Wad::loadWad(argv[1]);
     argv[1] = argv[2];
-    argv[2] = NULL;
-    return fuse_main(2, argv, &operations, NULL);
+    return fuse_main(argc - 1, argv, &operations, NULL);
 }

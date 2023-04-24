@@ -41,7 +41,11 @@ void Wad::addNode(string path, int length, int offset, bool isDirectory)
             name = path.substr(1);
         }
 
-        node->elements[name] = new Node(length, offset, node->elements.size(), isDirectory);
+        // Only add if non-duplicate
+        if (node->elements.find(name) == node->elements.end())
+        {
+            node->elements[name] = new Node(length, offset, node->elements.size(), isDirectory);
+        }
     }
 }
 
@@ -144,9 +148,9 @@ Wad *Wad::loadWad(const string &path)
         // Header (offset of descriptors)
         for (int i = 0; i < 4; i++)
         {
-            wad->descOffset += (wad->data[currByte++] << (8 * i));
+            wad->offDesc += (wad->data[currByte++] << (8 * i));
         }
-        currByte = wad->descOffset;
+        currByte = wad->offDesc;
 
         string currPath = ""; // Tracks currently active path
         int EM = 0;           // Tracks current file (if E#M# folder)
@@ -253,7 +257,7 @@ int Wad::getContents(const string &path, char *buffer, int length, int offset)
         // Reduce length if passed in values are improper
         if (length > node->length || offset + length > node->length)
         {
-            cout << "WARNING: Given length was too big, ignoring..." << endl;
+            cout << "WARNING: Given length was too big, continuing with reduced length..." << endl;
             length = node->length;
         }
 

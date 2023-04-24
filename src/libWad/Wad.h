@@ -26,7 +26,7 @@ private:
 
     string magic = "";
     int numDesc = 0;
-    int descOffset = 0;
+    int offDesc = 0;
 
     // Helper Functions
     void addNode(string path, int length, int offset, bool isDirectory);

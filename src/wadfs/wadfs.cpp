@@ -68,17 +68,29 @@ static int readdir_callback(const char *path, void *buf, fuse_fill_dir_t filler,
     }
 }
 
+void destroy_calback(void *thing)
+{
+    delete wad;
+}
+
 static struct fuse_operations operations
 {
     .getattr = getattr_callback,
     .open = open_callback,
     .read = read_callback,
-    .readdir = readdir_callback
+    .readdir = readdir_callback,
+    .destroy = destroy_calback
 };
 
 int main(int argc, char *argv[])
 {
     wad = Wad::loadWad(argv[1]);
     argv[1] = argv[2];
+
+    if(argc == 4)
+    {
+        argv[2] = argv[3];
+    }
+
     return fuse_main(argc - 1, argv, &operations, NULL);
 }
